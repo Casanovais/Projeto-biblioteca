@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - Gerenciamento de Alunos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .search-box {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box input {
+            padding: 10px;
+            font-size: 18px;
+            width: 80%;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .search-box button:hover {
+            background-color: #555;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .result table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .entry-form {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .entry-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .entry-form input, .entry-form select {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .entry-form button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .entry-form button:hover {
+            background-color: #555;
+        }
+
+        .end-page{
+            display: flex;
+            background: #3d449a;
+            padding: 5px;
+            margin-top: 60px;
+            align-items: center;
+            justify-content:start; 
+        }
+
+        .end-page footer{
+            font-size: 14px;
+            margin: auto;
+        }
+
+        .end-page img{
+            height: 50px;
+            width: 100px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+    
+    <header style="background-color: #653D9A;">
+        <h1 style="color: #e7e7e7;">Biblioteca - Gerenciamento de Alunos</h1>
+    </header>
+
+    <div class="container">
+        <!-- Pesquisa por aluno -->
+        <div class="search-box">
+            <h2>Pesquisar Aluno</h2>
+            <input type="text" id="studentName" placeholder="Digite o nome do aluno">
+            <button onclick="searchStudent()">Pesquisar</button>
+        </div>
+
+        <!-- Resultado da pesquisa -->
+        <div id="result" class="result" style="display: none;">
+            <h2>Registros do Aluno</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome de Estudante</th>
+                        <th>Data de Registro</th>
+                        <th>Hora de Registro</th>
+                    </tr>
+                </thead>
+                <tbody id="studentRecords">
+                    <!-- Registros aparecerão aqui, isto era a cena que querias -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulário para registrar registros -->
+        <div class="entry-form">
+            <h2>Registrar Entrada de Estudante</h2>
+            <label for="student">Nome do Aluno</label>
+            <input type="text" id="student" placeholder="Nome do aluno">
+
+            <label for="date">Data de Registro</label>
+            <input type="date" id="date" placeholder="Data de Registro">
+
+            <label for="hora">Hora</label>
+            <input type="time" id="hora" placeholder="Hora de Registro">
+
+            <button onclick="registerEntry()">Registrar</button>
+        </div>
+    </div>
+
+    
+    <div class="end-page">
+        <img src="imagem/logo_aeddinis.png" alt="oi">
+        <footer>
+            © 2016-2021 Agrupamento de Escolas D. Dinis, todos os direitos reservados.
+        </footer>
+    </div>
+    
+
+    <script>
+        // Função de pesquisa de aluno (pega os valores fornecidos atraves do nome na base de dados, limpa a cena anterior, e cria uma tabela
+        //depois de criar uma tabela faz com que o div não esteja escondido, dai o block (que é por em fila)
+
+        function searchStudent() {
+            const studentName = document.getElementById('studentName').value; //basicamente como vais ver não serve para nada a não ser quando backend for implementado
+            const Div_Of_Result = document.getElementById('result');
+            const studentRecords = document.getElementById('studentRecords');
+
+            // Simulando busca (essa parte precisa ser integrada ao backend depois, deixo com o teu irmãi)
+            const exemplos = [
+                { Nome: 'Rafael', Data: '2023-01-15', Hora: '15:30' },
+                { Nome: 'Migueç', Data: '', Hora: '14:25' },
+                { Nome: 'O Idiota', Data: '2023-0305', Hora: '' }
+            ];
+
+            studentRecords.innerHTML = '';
+
+            exemplos.forEach(exemplo => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${exemplo.Nome || 'Invalido'}</td>
+                    <td>${exemplo.Data || 'Invalido'}</td>
+                    <td>${exemplo.Hora || 'Invalido'}</td>
+                `;
+                studentRecords.appendChild(row);
+            });
+
+            Div_Of_Result.style.display = 'block';
+        }
+
+        // Função para registrar empréstimo/devolução
+        function registerEntry() {
+            const student = document.getElementById('student').value;
+            const date = document.getElementById('date').value;
+            const hora = document.getElementById('hora').value;
+
+            // Aqui é onde o teu irmão tem que ver na base de dados 
+            alert(`Registro de ${student} no dia "${date}" e na hora "${hora}" realizado de forma incrivelmente gostosa!`);
+        }
+    </script>
+
+</body>
+</html>
